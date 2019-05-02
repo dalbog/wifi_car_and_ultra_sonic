@@ -15,11 +15,7 @@ void setup() {
 
 void loop() {
   //앞으로 가는 코드
-  digitalWrite(2, HIGH);
-  digitalWrite(3, LOW);
-  digitalWrite(8, LOW);
-  digitalWrite(9, HIGH);
-
+  forward();
 
   // 초음파를 보낸다. 다 보내면 echo가 HIGH 상태로 대기하게 된다.
   digitalWrite(trigPin, LOW);
@@ -37,11 +33,41 @@ void loop() {
   Serial.print(distance);
   Serial.println("cm");
 
-  if (distance < (float) 20) {
+  if (distance < (float) 30) {
+    
+    left();
+    right();
+    forward();
+    delay(1000);
+    stop_mine();
+    delay(10000);
+  }
+  delay(100);
+}
+void forward(){
     digitalWrite(2, HIGH);
+  digitalWrite(3, LOW);
+  digitalWrite(8, LOW);
+  digitalWrite(9, HIGH);
+  analogWrite(5, 255);
+  analogWrite(6, 250);
+
+}
+void left(){
+  forward();
+  analogWrite(6, 0);
+  delay(600);
+  forward();
+}
+void right(){
+  forward();
+  analogWrite(5, 0);
+  delay(600);
+  forward();
+}
+void stop_mine(){
+  digitalWrite(2, HIGH);
     digitalWrite(3, HIGH);
     digitalWrite(8, HIGH);
     digitalWrite(9, HIGH);
-  }
-  delay(100);
 }
